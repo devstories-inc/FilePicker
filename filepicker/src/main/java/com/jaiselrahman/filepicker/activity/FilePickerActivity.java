@@ -161,7 +161,14 @@ public class FilePickerActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(false);
         recyclerView.setItemViewCacheSize(20);
 
-        if (requestPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION)) {
+        String[] ALBUM;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ALBUM = new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO};
+        } else {
+            ALBUM = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        }
+
+        if (requestPermission(ALBUM, REQUEST_WRITE_PERMISSION)) {
             loadFiles();
         }
 
